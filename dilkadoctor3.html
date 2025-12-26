@@ -1,0 +1,2563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CardioCare | Online Cardiologist Consultation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #d72a2a;  /* Changed to red */
+            --primary-dark: #b01a1a;  /* Darker red */
+            --secondary: #ff6b6b;  /* Keeping secondary */
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --success: #28a745;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            line-height: 1.6;
+            color: #333;
+            background-color: #fff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo i {
+            color: var(--primary);
+            font-size: 32px;
+            animation: heartbeat 2s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .logo h1 {
+            font-size: 28px;
+            color: var(--primary);
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 16px;
+            transition: var(--transition);
+            position: relative;
+            padding: 5px 0;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+            border-radius: 3px;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(215, 42, 42, 0.3);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: 0 4px 12px rgba(215, 42, 42, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(215, 42, 42, 0.4);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: var(--primary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .mobile-menu-btn:hover {
+            transform: rotate(90deg);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 249, 250, 0.95) 100%),
+                        url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 100px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(215, 42, 42, 0.1) 0%, rgba(255, 107, 107, 0.05) 100%);
+            z-index: 1;
+        }
+
+        .hero-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 60px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content {
+            flex: 1;
+            animation: fadeInLeft 1s ease;
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .hero-content h2 {
+            font-size: 48px;
+            color: var(--dark);
+            margin-bottom: 25px;
+            line-height: 1.2;
+            font-weight: 800;
+        }
+
+        .hero-content h2 span {
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-content h2 span::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background-color: rgba(255, 107, 107, 0.2);
+            z-index: -1;
+        }
+
+        .hero-content p {
+            font-size: 20px;
+            color: var(--gray);
+            margin-bottom: 35px;
+            line-height: 1.8;
+        }
+
+        .hero-image {
+            flex: 1;
+            animation: fadeInRight 1s ease;
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            height: 500px;
+            box-shadow: var(--shadow);
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Hero Slider Styles */
+        .hero-slider {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .hero-slide {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            border-radius: 20px;
+        }
+
+        .hero-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 8s ease;
+        }
+
+        .hero-slide:hover img {
+            transform: scale(1.05);
+        }
+
+        .slide-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            padding: 30px;
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.5s ease;
+        }
+
+        .hero-slide:hover .slide-overlay {
+            transform: translateY(0);
+        }
+
+        .slide-overlay h4 {
+            font-size: 22px;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .slide-overlay p {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 10px;
+        }
+
+        .slide-badge {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .slick-dots {
+            bottom: 20px !important;
+        }
+
+        .slick-dots li button:before {
+            color: white !important;
+            font-size: 12px !important;
+            opacity: 0.7 !important;
+        }
+
+        .slick-dots li.slick-active button:before {
+            color: var(--primary) !important;
+            opacity: 1 !important;
+        }
+
+        .slick-prev, .slick-next {
+            width: 50px !important;
+            height: 50px !important;
+            z-index: 10 !important;
+            background: rgba(255, 255, 255, 0.9) !important;
+            border-radius: 50% !important;
+            transition: var(--transition) !important;
+        }
+
+        .slick-prev:hover, .slick-next:hover {
+            background: white !important;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2) !important;
+        }
+
+        .slick-prev:before, .slick-next:before {
+            color: var(--primary) !important;
+            font-size: 24px !important;
+            opacity: 1 !important;
+        }
+
+        .slick-prev {
+            left: 20px !important;
+        }
+
+        .slick-next {
+            right: 20px !important;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            min-width: 150px;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-number {
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 5px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+        }
+
+        /* Floating Elements */
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-element {
+            position: absolute;
+            background: rgba(215, 42, 42, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            top: 20%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            bottom: 20%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .floating-element:nth-child(3) {
+            width: 80px;
+            height: 80px;
+            top: 40%;
+            right: 15%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        /* Search Section */
+        .search-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 50px 0;
+            margin-top: -40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 10;
+        }
+
+        .search-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .search-box {
+            display: flex;
+            background: white;
+            border-radius: 60px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            padding: 8px;
+            border: 2px solid transparent;
+            transition: var(--transition);
+        }
+
+        .search-box:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(215, 42, 42, 0.2);
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 20px 30px;
+            border: none;
+            font-size: 18px;
+            outline: none;
+            background: transparent;
+        }
+
+        .search-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 0 40px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border-radius: 50px;
+        }
+
+        .search-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(215, 42, 42, 0.4);
+        }
+
+        .search-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 25px;
+            justify-content: center;
+        }
+
+        .tag {
+            background: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 15px;
+            color: var(--gray);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            border: 2px solid transparent;
+        }
+
+        .tag:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(215, 42, 42, 0.3);
+            border-color: var(--primary);
+        }
+
+        /* Services Section */
+        .services {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 42px;
+            color: var(--dark);
+            margin-bottom: 20px;
+            font-weight: 800;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .section-title p {
+            color: var(--gray);
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .service-card {
+            background-color: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid #f0f0f0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .service-icon {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, rgba(215, 42, 42, 0.1) 0%, rgba(255, 107, 107, 0.1) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            transition: var(--transition);
+        }
+
+        .service-card:hover .service-icon {
+            transform: scale(1.1) rotate(10deg);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        .service-icon i {
+            font-size: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: var(--transition);
+        }
+
+        .service-card:hover .service-icon i {
+            color: white;
+            -webkit-text-fill-color: white;
+        }
+
+        .service-card h3 {
+            font-size: 26px;
+            margin-bottom: 20px;
+            color: var(--dark);
+            font-weight: 700;
+        }
+
+        .service-card p {
+            color: var(--gray);
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+
+        /* Specialties Carousel */
+        .specialties {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .specialty-carousel {
+            margin: 0 -10px;
+        }
+
+        .specialty-card {
+            background: white;
+            border-radius: 15px;
+            margin: 10px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            border: 1px solid #f0f0f0;
+        }
+
+        .specialty-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .specialty-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(215, 42, 42, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .specialty-icon i {
+            font-size: 35px;
+            color: var(--primary);
+        }
+
+        .specialty-card h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .specialty-card p {
+            color: var(--gray);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Doctors Carousel */
+        .doctors {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .doctors-carousel {
+            margin: 0 -15px;
+        }
+
+        .doctor-card {
+            background-color: white;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 15px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid #f0f0f0;
+        }
+
+        .doctor-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .doctor-img {
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .doctor-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .doctor-card:hover .doctor-img img {
+            transform: scale(1.1);
+        }
+
+        .doctor-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--secondary);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .doctor-info {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .doctor-info h3 {
+            font-size: 22px;
+            margin-bottom: 8px;
+            color: var(--dark);
+            font-weight: 700;
+        }
+
+        .doctor-info p {
+            color: var(--gray);
+            margin-bottom: 15px;
+            font-size: 15px;
+        }
+
+        .doctor-rating {
+            color: #ffc107;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .doctor-rating i {
+            margin: 0 2px;
+        }
+
+        .doctor-features {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--light-gray);
+        }
+
+        .feature {
+            text-align: center;
+        }
+
+        .feature i {
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 20px;
+        }
+
+        .feature span {
+            font-size: 13px;
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        /* Partners Carousel */
+        .partners {
+            padding: 60px 0;
+            background: #f8f9fa;
+        }
+
+        .partners-carousel {
+            margin: 0 20px;
+        }
+
+        .partner-logo {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 120px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid #f0f0f0;
+        }
+
+        .partner-logo:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .partner-logo img {
+            max-width: 100%;
+            max-height: 60px;
+            filter: grayscale(100%);
+            opacity: 0.7;
+            transition: var(--transition);
+        }
+
+        .partner-logo:hover img {
+            filter: grayscale(0);
+            opacity: 1;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 60px;
+            position: relative;
+        }
+
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 10%;
+            width: 80%;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            z-index: 1;
+            border-radius: 3px;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+            max-width: 220px;
+        }
+
+        .step-number {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: 800;
+            color: white;
+            margin: 0 auto 25px;
+            box-shadow: 0 10px 25px rgba(215, 42, 42, 0.3);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-number::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: rotate(45deg);
+            transition: var(--transition);
+        }
+
+        .step:hover .step-number::after {
+            transform: translateX(100%) rotate(45deg);
+        }
+
+        .step:hover .step-number {
+            transform: scale(1.1);
+            box-shadow: 0 15px 30px rgba(215, 42, 42, 0.4);
+        }
+
+        .step h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: var(--dark);
+            font-weight: 700;
+        }
+
+        .step p {
+            color: var(--gray);
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid #f0f0f0;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-card h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--dark);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .feature-card h3 i {
+            color: var(--primary);
+            font-size: 28px;
+        }
+
+        .feature-card p {
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .testimonial-carousel {
+            margin: 0 -15px;
+        }
+
+        .testimonial-card {
+            background-color: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 15px;
+            box-shadow: var(--shadow);
+            border: 1px solid #f0f0f0;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            font-size: 80px;
+            color: rgba(215, 42, 42, 0.1);
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .testimonial-text {
+            font-size: 18px;
+            color: var(--gray);
+            margin-bottom: 30px;
+            font-style: italic;
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .author-img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid var(--primary);
+            padding: 3px;
+        }
+
+        .author-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .author-info h4 {
+            font-size: 20px;
+            color: var(--dark);
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .author-info p {
+            color: var(--gray);
+            font-size: 15px;
+        }
+
+        /* Blog Carousel */
+        .blog {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .blog-carousel {
+            margin: 0 -15px;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 15px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid #f0f0f0;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .blog-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .blog-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .blog-card:hover .blog-img img {
+            transform: scale(1.1);
+        }
+
+        .blog-content {
+            padding: 25px;
+        }
+
+        .blog-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .blog-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .blog-content h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--dark);
+            line-height: 1.4;
+        }
+
+        .blog-content p {
+            color: var(--gray);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 100px 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.1;
+            z-index: 1;
+        }
+
+        .cta-container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta h2 {
+            font-size: 48px;
+            margin-bottom: 25px;
+            font-weight: 800;
+        }
+
+        .cta p {
+            font-size: 22px;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.9;
+            line-height: 1.8;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-light {
+            background-color: white;
+            color: var(--primary);
+            font-weight: 700;
+            box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-light:hover {
+            background-color: var(--light-gray);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.4);
+        }
+
+        .btn-outline-light {
+            background-color: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+
+        .btn-outline-light:hover {
+            background-color: white;
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #2c3e50 0%, #1a2530 100%);
+            color: white;
+            padding: 80px 0 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .footer-col h3 {
+            font-size: 24px;
+            margin-bottom: 25px;
+            color: white;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 3px;
+        }
+
+        .footer-col p {
+            color: #adb5bd;
+            margin-bottom: 25px;
+            line-height: 1.8;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 15px;
+        }
+
+        .footer-col ul li a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-col ul li a:hover {
+            color: white;
+            transform: translateX(10px);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .social-icons a {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 20px;
+        }
+
+        .social-icons a:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #adb5bd;
+            font-size: 15px;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            transition: var(--transition);
+            opacity: 0;
+            visibility: hidden;
+            z-index: 999;
+            box-shadow: 0 5px 20px rgba(215, 42, 42, 0.4);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(215, 42, 42, 0.6);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .container {
+                max-width: 1140px;
+            }
+
+            .hero-content h2 {
+                font-size: 42px;
+            }
+
+            .stat-item {
+                min-width: 130px;
+            }
+
+            .hero-image {
+                height: 450px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-content, .hero-image {
+                width: 100%;
+            }
+
+            .hero-content {
+                margin-bottom: 50px;
+            }
+
+            .hero-image {
+                height: 400px;
+            }
+
+            .slick-prev {
+                left: 10px !important;
+            }
+
+            .slick-next {
+                right: 10px !important;
+            }
+
+            .steps {
+                flex-direction: column;
+                align-items: center;
+                gap: 60px;
+            }
+
+            .steps::before {
+                display: none;
+            }
+
+            .step {
+                max-width: 100%;
+            }
+
+            .cta h2 {
+                font-size: 38px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            nav {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+                padding: 30px;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: var(--transition);
+                z-index: 999;
+                border-radius: 0 0 20px 20px;
+            }
+
+            nav.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .auth-buttons {
+                display: none;
+            }
+
+            .hero-content h2 {
+                font-size: 36px;
+            }
+
+            .hero-content p {
+                font-size: 18px;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .hero-image {
+                height: 350px;
+            }
+
+            .slick-prev, .slick-next {
+                width: 40px !important;
+                height: 40px !important;
+            }
+
+            .slick-prev:before, .slick-next:before {
+                font-size: 20px !important;
+            }
+
+            .search-box {
+                flex-direction: column;
+                border-radius: 20px;
+                padding: 20px;
+            }
+
+            .search-input, .search-btn {
+                width: 100%;
+                border-radius: 15px;
+                margin-bottom: 15px;
+            }
+
+            .section-title h2 {
+                font-size: 36px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cta-buttons .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .floating-elements {
+                display: none;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-content h2 {
+                font-size: 32px;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .stat-item {
+                width: 100%;
+                max-width: 250px;
+            }
+
+            .hero-image {
+                height: 300px;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-card {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <h1>Cardio<span>Care</span></h1>
+            </div>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#specialties">Specialties</a></li>
+                    <li><a href="#doctors">Doctors</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                </ul>
+            </nav>
+
+            <div class="auth-buttons">
+                <button class="btn btn-outline">Login</button>
+                <button class="btn btn-primary">Sign Up</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="floating-elements">
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+        </div>
+
+        <div class="container hero-container">
+            <div class="hero-content">
+                <h2>Expert <span>Cardiologist</span> Consultations From The Comfort of Your Home</h2>
+                <p>Connect with top cardiologists for virtual consultations, second opinions, and ongoing heart health management. Our platform provides secure, convenient, and expert cardiac care when you need it most.</p>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Expert Doctors</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">50K+</div>
+                        <div class="stat-label">Patients Served</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Available Support</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">99%</div>
+                        <div class="stat-label">Satisfaction Rate</div>
+                    </div>
+                </div>
+                <button class="btn btn-primary" style="margin-top: 40px; padding: 18px 40px; font-size: 18px;">
+                    <i class="fas fa-calendar-check"></i> Book Appointment Now
+                </button>
+            </div>
+            <div class="hero-image">
+                <div class="hero-slider" id="heroSlider">
+                    <!-- Slide 1 -->
+                    <div class="hero-slide">
+                        <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Senior Cardiologist">
+                        <div class="slide-overlay">
+                            <h4>Dr. Michael Chen</h4>
+                            <p>Interventional Cardiologist</p>
+                            <p>15+ years experience</p>
+                            <span class="slide-badge">Top Rated</span>
+                        </div>
+                    </div>
+                    <!-- Slide 2 -->
+                    <div class="hero-slide">
+                        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Female Cardiologist">
+                        <div class="slide-overlay">
+                            <h4>Dr. Sarah Johnson</h4>
+                            <p>Pediatric Cardiologist</p>
+                            <p>12+ years experience</p>
+                            <span class="slide-badge">Expert</span>
+                        </div>
+                    </div>
+                    <!-- Slide 3 -->
+                    <div class="hero-slide">
+                        <img src="https://images.unsplash.com/photo-1594824434340-7e7dfc37cabb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Cardiac Surgeon">
+                        <div class="slide-overlay">
+                            <h4>Dr. Robert Kim</h4>
+                            <p>Cardiac Surgeon</p>
+                            <p>20+ years experience</p>
+                            <span class="slide-badge">Senior Consultant</span>
+                        </div>
+                    </div>
+                    <!-- Slide 4 -->
+                    <div class="hero-slide">
+                        <img src="https://images.unsplash.com/photo-1537368910025-700350fe46c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Electrophysiologist">
+                        <div class="slide-overlay">
+                            <h4>Dr. Emily Rodriguez</h4>
+                            <p>Electrophysiologist</p>
+                            <p>10+ years experience</p>
+                            <span class="slide-badge">Patient Favorite</span>
+                        </div>
+                    </div>
+                    <!-- Slide 5 -->
+                    <div class="hero-slide">
+                        <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Heart Failure Specialist">
+                        <div class="slide-overlay">
+                            <h4>Dr. James Wilson</h4>
+                            <p>Heart Failure Specialist</p>
+                            <p>18+ years experience</p>
+                            <span class="slide-badge">Wellness Expert</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="search-section">
+        <div class="container search-container">
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="Search for cardiologists, conditions, or symptoms...">
+                <button class="search-btn">Search Doctors</button>
+            </div>
+            <div class="search-tags">
+                <span class="tag">Hypertension</span>
+                <span class="tag">Heart Failure</span>
+                <span class="tag">Arrhythmia</span>
+                <span class="tag">Cholesterol</span>
+                <span class="tag">ECG Review</span>
+                <span class="tag">Angina</span>
+                <span class="tag">Heart Attack</span>
+                <span class="tag">Cardiac Surgery</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Services</h2>
+                <p>Comprehensive cardiac care solutions designed for your heart health needs</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3>Video Consultation</h3>
+                    <p>Face-to-face virtual consultations with top cardiologists from anywhere in the world.</p>
+                    <button class="btn btn-outline">Learn More</button>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-file-medical-alt"></i>
+                    </div>
+                    <h3>Second Opinion</h3>
+                    <p>Get expert second opinions on your cardiac diagnosis and treatment plans from specialists.</p>
+                    <button class="btn btn-outline">Learn More</button>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3>Chronic Care Management</h3>
+                    <p>Ongoing management for hypertension, heart failure, and other chronic conditions.</p>
+                    <button class="btn btn-outline">Learn More</button>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-prescription-bottle-alt"></i>
+                    </div>
+                    <h3>E-Prescriptions</h3>
+                    <p>Get prescriptions electronically sent to your preferred pharmacy with automatic refills.</p>
+                    <button class="btn btn-outline">Learn More</button>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <h3>Health Monitoring</h3>
+                    <p>Track your heart health with integrated monitoring devices and regular check-ins.</p>
+                    <button class="btn btn-outline">Learn More</button>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-ambulance"></i>
+                    </div>
+                    <h3>Emergency Support</h3>
+                    <p>24/7 emergency cardiac consultation and guidance for urgent situations.</p>
+                    <button class="btn btn-outline">Learn More</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Specialties Carousel -->
+    <section class="specialties" id="specialties">
+        <div class="container">
+            <div class="section-title">
+                <h2>Cardiac Specialties</h2>
+                <p>Expert care for all heart conditions</p>
+            </div>
+            <div class="specialty-carousel" id="specialtyCarousel">
+                <!-- Specialties will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Doctors Carousel -->
+    <section class="doctors" id="doctors">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Expert Cardiologists</h2>
+                <p>Meet our board-certified cardiologists with years of experience</p>
+            </div>
+            <div class="doctors-carousel" id="doctorsCarousel">
+                <!-- Doctor cards will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Carousel -->
+    <section class="partners">
+        <div class="container">
+            <div class="section-title">
+                <h2>Trusted By</h2>
+                <p>Partnered with leading healthcare organizations</p>
+            </div>
+            <div class="partners-carousel" id="partnersCarousel">
+                <!-- Partners will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-title">
+                <h2>How It Works</h2>
+                <p>Four simple steps to connect with a cardiologist</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Sign Up</h3>
+                    <p>Create your free account in minutes with basic details and medical history</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Choose Doctor</h3>
+                    <p>Browse profiles, read reviews, and select your preferred cardiologist</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Book Appointment</h3>
+                    <p>Select date & time that works for you from available slots</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Connect & Consult</h3>
+                    <p>Join secure video consultation at scheduled time via app or browser</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Choose CardioCare?</h2>
+                <p>Our platform is designed with your heart health in mind</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3><i class="fas fa-shield-alt"></i> Secure & Confidential</h3>
+                    <p>HIPAA-compliant platform ensuring your medical data is protected with bank-level encryption and strict privacy controls.</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-clock"></i> 24/7 Availability</h3>
+                    <p>Access to cardiologists round the clock for emergencies and routine consultations with average wait time under 5 minutes.</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-file-medical"></i> Digital Health Records</h3>
+                    <p>Centralized storage for all your cardiac reports, prescriptions, and consultation history accessible anytime, anywhere.</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-mobile-alt"></i> Mobile App</h3>
+                    <p>Access consultations, prescriptions, and health records from our user-friendly mobile app available on iOS and Android.</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-hand-holding-usd"></i> Insurance Support</h3>
+                    <p>Direct billing with major insurance providers for seamless payment experience and claim processing.</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-headset"></i> Dedicated Support</h3>
+                    <p>Personalized care coordinators to assist you throughout your healthcare journey and ensure continuity of care.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Carousel -->
+    <section class="blog" id="blog">
+        <div class="container">
+            <div class="section-title">
+                <h2>Latest from Our Blog</h2>
+                <p>Health tips, research updates, and heart care advice</p>
+            </div>
+            <div class="blog-carousel" id="blogCarousel">
+                <!-- Blog posts will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Patient Stories</h2>
+                <p>Hear from our satisfied patients</p>
+            </div>
+            <div class="testimonial-carousel" id="testimonialCarousel">
+                <!-- Testimonials will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container cta-container">
+            <h2>Ready to Take Control of Your Heart Health?</h2>
+            <p>Join thousands of patients who have found convenient, expert cardiac care through CardioCare. Start your journey to better heart health today with a risk-free consultation.</p>
+            <div class="cta-buttons">
+                <button class="btn btn-light">
+                    <i class="fas fa-calendar-alt"></i> Book Your First Consultation
+                </button>
+                <button class="btn btn-outline-light">
+                    <i class="fas fa-phone-alt"></i> Speak to Our Advisor
+                </button>
+                <button class="btn btn-outline-light">
+                    <i class="fas fa-download"></i> Download Our App
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo" style="margin-bottom: 25px;">
+                        <i class="fas fa-heartbeat"></i>
+                        <h1 style="color: white;">Cardio<span style="color: var(--secondary);">Care</span></h1>
+                    </div>
+                    <p>Your trusted partner in cardiac care, providing expert consultations and comprehensive heart health management from the comfort of your home.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="#services"><i class="fas fa-chevron-right"></i> Services</a></li>
+                        <li><a href="#doctors"><i class="fas fa-chevron-right"></i> Find a Doctor</a></li>
+                        <li><a href="#how-it-works"><i class="fas fa-chevron-right"></i> How It Works</a></li>
+                        <li><a href="#blog"><i class="fas fa-chevron-right"></i> Blog</a></li>
+                        <li><a href="#testimonials"><i class="fas fa-chevron-right"></i> Testimonials</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Video Consultation</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Second Opinion</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Chronic Care</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Emergency Consultation</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Health Checkups</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Diagnostic Tests</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> 123 Medical Center, Healthcare City</a></li>
+                        <li><a href="tel:+18001234567"><i class="fas fa-phone"></i> +1 (800) 123-4567</a></li>
+                        <li><a href="mailto:support@cardiocare.com"><i class="fas fa-envelope"></i> support@cardiocare.com</a></li>
+                        <li><a href="#"><i class="fas fa-clock"></i> 24/7 Emergency Support</a></li>
+                        <li><a href="#"><i class="fas fa-download"></i> Download App</a></li>
+                        <li><a href="#"><i class="fas fa-file-pdf"></i> Download Brochure</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 CardioCare. All rights reserved. | <a href="#" style="color: #adb5bd;">Privacy Policy</a> | <a href="#" style="color: #adb5bd;">Terms of Service</a> | <a href="#" style="color: #adb5bd;">HIPAA Compliance</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script>
+        // Mobile Menu Toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            const nav = document.getElementById('mainNav');
+            nav.classList.toggle('active');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const nav = document.getElementById('mainNav');
+            const menuBtn = document.getElementById('mobileMenuBtn');
+
+            if (!nav.contains(event.target) && !menuBtn.contains(event.target)) {
+                nav.classList.remove('active');
+            }
+        });
+
+        // Back to Top Button
+        const backToTopBtn = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Sample Data
+        const specialties = [
+            { icon: 'fas fa-heart', title: 'Interventional Cardiology', desc: 'Minimally invasive heart procedures' },
+            { icon: 'fas fa-bolt', title: 'Electrophysiology', desc: 'Heart rhythm disorders treatment' },
+            { icon: 'fas fa-child', title: 'Pediatric Cardiology', desc: 'Heart care for children' },
+            { icon: 'fas fa-user-injured', title: 'Heart Failure', desc: 'Advanced heart failure management' },
+            { icon: 'fas fa-stethoscope', title: 'Preventive Cardiology', desc: 'Heart disease prevention' },
+            { icon: 'fas fa-procedures', title: 'Cardiac Surgery', desc: 'Surgical heart treatments' },
+            { icon: 'fas fa-female', title: 'Women\'s Heart Health', desc: 'Cardiac care for women' },
+            { icon: 'fas fa-user-md', title: 'Geriatric Cardiology', desc: 'Heart care for elderly' }
+        ];
+
+        const doctors = [
+            {
+                id: 1,
+                name: "Dr. Sarah Johnson",
+                specialization: "Interventional Cardiologist",
+                experience: "15+ years",
+                rating: 4.9,
+                consultations: 4200,
+                availability: "Available Today",
+                badge: "Top Rated",
+                image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: 2,
+                name: "Dr. Michael Chen",
+                specialization: "Electrophysiologist",
+                experience: "12+ years",
+                rating: 4.8,
+                consultations: 3800,
+                availability: "Available Tomorrow",
+                badge: "Expert",
+                image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: 3,
+                name: "Dr. Emily Rodriguez",
+                specialization: "Pediatric Cardiologist",
+                experience: "10+ years",
+                rating: 4.9,
+                consultations: 3100,
+                availability: "Available Today",
+                badge: "Patient Favorite",
+                image: "https://images.unsplash.com/photo-1594824434340-7e7dfc37cabb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: 4,
+                name: "Dr. James Wilson",
+                specialization: "Heart Failure Specialist",
+                experience: "18+ years",
+                rating: 4.7,
+                consultations: 5200,
+                availability: "Available Today",
+                badge: "Senior Consultant",
+                image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: 5,
+                name: "Dr. Lisa Park",
+                specialization: "Preventive Cardiology",
+                experience: "14+ years",
+                rating: 4.9,
+                consultations: 2900,
+                availability: "Available Tomorrow",
+                badge: "Wellness Expert",
+                image: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: 6,
+                name: "Dr. Robert Kim",
+                specialization: "Cardiac Surgeon",
+                experience: "20+ years",
+                rating: 4.8,
+                consultations: 4500,
+                availability: "Available Today",
+                badge: "Surgical Specialist",
+                image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+            }
+        ];
+
+        const partners = [
+            { name: 'American Heart Association', logo: '❤️' },
+            { name: 'Mayo Clinic', logo: '🏥' },
+            { name: 'Cleveland Clinic', logo: '⚕️' },
+            { name: 'Johns Hopkins', logo: '🎓' },
+            { name: 'Harvard Medical', logo: '📚' },
+            { name: 'Stanford Health', logo: '🌲' },
+            { name: 'Mass General', logo: '💊' },
+            { name: 'Mount Sinai', logo: '⛰️' }
+        ];
+
+        const blogPosts = [
+            {
+                title: "5 Heart-Healthy Habits for 2024",
+                excerpt: "Discover the latest research-backed habits to improve your heart health and reduce cardiovascular risk.",
+                image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                date: "Jan 15, 2024",
+                author: "Dr. Sarah Johnson",
+                readTime: "5 min read"
+            },
+            {
+                title: "Understanding Hypertension: Silent Killer",
+                excerpt: "Learn about hypertension symptoms, risks, and modern treatment approaches for better management.",
+                image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                date: "Jan 12, 2024",
+                author: "Dr. Michael Chen",
+                readTime: "7 min read"
+            },
+            {
+                title: "Virtual Cardiology: The Future is Here",
+                excerpt: "How telemedicine is revolutionizing cardiac care and improving patient outcomes worldwide.",
+                image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                date: "Jan 10, 2024",
+                author: "Dr. Emily Rodriguez",
+                readTime: "6 min read"
+            },
+            {
+                title: "Heart Healthy Diet: Mediterranean Approach",
+                excerpt: "Nutrition tips and meal plans based on Mediterranean diet principles for optimal heart health.",
+                image: "https://images.unsplash.com/photo-1490818387583-1baba5e638af?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                date: "Jan 8, 2024",
+                author: "Dr. Lisa Park",
+                readTime: "8 min read"
+            },
+            {
+                title: "Exercise for Heart: What Really Works",
+                excerpt: "Evidence-based exercise routines specifically designed to strengthen your cardiovascular system.",
+                image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                date: "Jan 5, 2024",
+                author: "Dr. James Wilson",
+                readTime: "6 min read"
+            }
+        ];
+
+        const testimonials = [
+            {
+                id: 1,
+                text: "CardioCare saved my life! Dr. Johnson identified a serious condition during our virtual consultation that my local doctor had missed. The convenience of online consultations is incredible, and the follow-up care has been exceptional.",
+                author: "Robert Johnson",
+                role: "Heart Attack Survivor",
+                image: "https://randomuser.me/api/portraits/men/32.jpg",
+                rating: 5
+            },
+            {
+                id: 2,
+                text: "As someone with chronic hypertension, the continuous care I receive through CardioCare has been transformative. My cardiologist is always accessible and my health has improved significantly. The mobile app makes everything so easy!",
+                author: "Mary Williams",
+                role: "Hypertension Patient",
+                image: "https://randomuser.me/api/portraits/women/44.jpg",
+                rating: 5
+            },
+            {
+                id: 3,
+                text: "Getting a second opinion through CardioCare gave me confidence in my treatment plan. The process was seamless and the expertise was outstanding. Highly recommended for anyone with cardiac concerns!",
+                author: "David Miller",
+                role: "Heart Surgery Patient",
+                image: "https://randomuser.me/api/portraits/men/67.jpg",
+                rating: 4
+            },
+            {
+                id: 4,
+                text: "The 24/7 availability gave me peace of mind when I experienced chest pain at 2 AM. The emergency consultation was immediate and professional. This service is a game-changer for heart patients!",
+                author: "Susan Thompson",
+                role: "Emergency Patient",
+                image: "https://randomuser.me/api/portraits/women/65.jpg",
+                rating: 5
+            }
+        ];
+
+        // Initialize Sliders
+        $(document).ready(function(){
+            // Hero Slider
+            $('#heroSlider').slick({
+                dots: true,
+                infinite: true,
+                speed: 1000,
+                fade: false,
+                cssEase: 'ease-in-out',
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 3000,
+                pauseOnHover: true,
+                arrows: true,
+                prevArrow: '<button type="button" class="slick-prev"><i class="fas fa-chevron-left"></i></button>',
+                nextArrow: '<button type="button" class="slick-next"><i class="fas fa-chevron-right"></i></button>'
+            });
+
+            // Specialties Carousel
+            $('#specialtyCarousel').slick({
+                dots: true,
+                infinite: true,
+                speed: 500,
+                slidesToShow: 4,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 3000,
+                responsive: [
+                    {
+                        breakpoint: 1200,
+                        settings: {
+                            slidesToShow: 3,
+                            slidesToScroll: 1
+                        }
+                    },
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 1
+                        }
+                    },
+                    {
+                        breakpoint: 576,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1
+                        }
+                    }
+                ]
+            });
+
+            // Doctors Carousel
+            $('#doctorsCarousel').slick({
+                dots: true,
+                infinite: true,
+                speed: 500,
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 4000,
+                responsive: [
+                    {
+                        breakpoint: 1200,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 1
+                        }
+                    },
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1
+                        }
+                    }
+                ]
+            });
+
+            // Partners Carousel
+            $('#partnersCarousel').slick({
+                dots: false,
+                infinite: true,
+                speed: 500,
+                slidesToShow: 6,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 2000,
+                responsive: [
+                    {
+                        breakpoint: 1200,
+                        settings: {
+                            slidesToShow: 4,
+                            slidesToScroll: 1
+                        }
+                    },
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            slidesToShow: 3,
+                            slidesToScroll: 1
+                        }
+                    },
+                    {
+                        breakpoint: 576,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 1
+                        }
+                    }
+                ]
+            });
+
+            // Blog Carousel
+            $('#blogCarousel').slick({
+                dots: true,
+                infinite: true,
+                speed: 500,
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 3500,
+                responsive: [
+                    {
+                        breakpoint: 1200,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 1
+                        }
+                    },
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1
+                        }
+                    }
+                ]
+            });
+
+            // Testimonials Carousel
+            $('#testimonialCarousel').slick({
+                dots: true,
+                infinite: true,
+                speed: 500,
+                slidesToShow: 2,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 4500,
+                responsive: [
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1
+                        }
+                    }
+                ]
+            });
+        });
+
+        // Populate Specialties Carousel
+        const specialtyCarousel = document.getElementById('specialtyCarousel');
+        specialties.forEach(specialty => {
+            const specialtyCard = `
+                <div class="specialty-card">
+                    <div class="specialty-icon">
+                        <i class="${specialty.icon}"></i>
+                    </div>
+                    <h3>${specialty.title}</h3>
+                    <p>${specialty.desc}</p>
+                </div>
+            `;
+            specialtyCarousel.innerHTML += specialtyCard;
+        });
+
+        // Populate Doctors Carousel
+        const doctorsCarousel = document.getElementById('doctorsCarousel');
+        doctors.forEach(doctor => {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= Math.floor(doctor.rating)) {
+                    stars += '<i class="fas fa-star"></i>';
+                } else if (i - doctor.rating < 1) {
+                    stars += '<i class="fas fa-star-half-alt"></i>';
+                } else {
+                    stars += '<i class="far fa-star"></i>';
+                }
+            }
+
+            const doctorCard = `
+                <div class="doctor-card">
+                    <div class="doctor-img">
+                        <img src="${doctor.image}" alt="${doctor.name}">
+                        <div class="doctor-badge">${doctor.badge}</div>
+                    </div>
+                    <div class="doctor-info">
+                        <h3>${doctor.name}</h3>
+                        <p>${doctor.specialization}</p>
+                        <div class="doctor-rating">
+                            ${stars}
+                            <span style="color: #666; margin-left: 5px; font-weight: 600;">${doctor.rating}</span>
+                        </div>
+                        <div class="doctor-features">
+                            <div class="feature">
+                                <i class="fas fa-briefcase"></i>
+                                <span>${doctor.experience}</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-stethoscope"></i>
+                                <span>${doctor.consultations}+</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-clock"></i>
+                                <span>${doctor.availability}</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" style="margin-top: 20px; width: 100%;">
+                            <i class="fas fa-calendar-check"></i> Book Appointment
+                        </button>
+                    </div>
+                </div>
+            `;
+            doctorsCarousel.innerHTML += doctorCard;
+        });
+
+        // Populate Partners Carousel
+        const partnersCarousel = document.getElementById('partnersCarousel');
+        partners.forEach(partner => {
+            const partnerCard = `
+                <div class="partner-logo">
+                    <div style="font-size: 40px;">${partner.logo}</div>
+                    <div style="display: none;">${partner.name}</div>
+                </div>
+            `;
+            partnersCarousel.innerHTML += partnerCard;
+        });
+
+        // Populate Blog Carousel
+        const blogCarousel = document.getElementById('blogCarousel');
+        blogPosts.forEach(post => {
+            const blogCard = `
+                <div class="blog-card">
+                    <div class="blog-img">
+                        <img src="${post.image}" alt="${post.title}">
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="far fa-calendar"></i> ${post.date}</span>
+                            <span><i class="far fa-user"></i> ${post.author}</span>
+                            <span><i class="far fa-clock"></i> ${post.readTime}</span>
+                        </div>
+                        <h3>${post.title}</h3>
+                        <p>${post.excerpt}</p>
+                        <button class="btn btn-outline" style="width: 100%;">
+                            <i class="fas fa-book-reader"></i> Read Article
+                        </button>
+                    </div>
+                </div>
+            `;
+            blogCarousel.innerHTML += blogCard;
+        });
+
+        // Populate Testimonials Carousel
+        const testimonialCarousel = document.getElementById('testimonialCarousel');
+        testimonials.forEach(testimonial => {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                stars += i <= testimonial.rating ? '<i class="fas fa-star"></i>' : '<i class="far fa-star"></i>';
+            }
+
+            const testimonialCard = `
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "${testimonial.text}"
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-img">
+                            <img src="${testimonial.image}" alt="${testimonial.author}">
+                        </div>
+                        <div class="author-info">
+                            <h4>${testimonial.author}</h4>
+                            <p>${testimonial.role}</p>
+                            <div style="color: #ffc107; margin-top: 5px;">${stars}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            testimonialCarousel.innerHTML += testimonialCard;
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+
+                    // Close mobile menu if open
+                    document.getElementById('mainNav').classList.remove('active');
+                }
+            });
+        });
+
+        // Search functionality
+        document.querySelector('.search-btn').addEventListener('click', function() {
+            const searchTerm = document.querySelector('.search-input').value;
+            if(searchTerm.trim()) {
+                alert(`Searching for cardiologists specializing in: ${searchTerm}`);
+                // In a real application, you would redirect to search results page or filter content
+            }
+        });
+
+        // Tag click functionality
+        document.querySelectorAll('.tag').forEach(tag => {
+            tag.addEventListener('click', function() {
+                const searchTerm = this.textContent;
+                document.querySelector('.search-input').value = searchTerm;
+                // Trigger search
+                document.querySelector('.search-btn').click();
+            });
+        });
+
+        // Animation on scroll
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.service-card, .feature-card, .step, .stat-item');
+
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+
+                if (elementTop < windowHeight - 100) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        }
+
+        // Initial animation setup
+        document.querySelectorAll('.service-card, .feature-card, .step, .stat-item').forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(30px)';
+            element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        });
+
+        // Trigger animations on load and scroll
+        window.addEventListener('load', animateOnScroll);
+        window.addEventListener('scroll', animateOnScroll);
+    </script>
+</body>
+</html>
